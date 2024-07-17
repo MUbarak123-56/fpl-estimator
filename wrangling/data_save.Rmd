@@ -1,0 +1,56 @@
+---
+title: "Data Concatenation using R"
+output: html_notebook
+---
+
+```{r}
+library(openxlsx)
+```
+
+
+```{r}
+df_2020_21 <- read.csv('https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2020-21/gws/merged_gw.csv', encoding = 'UTF-8')
+df_2021_22 <- read.csv('https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2021-22/gws/merged_gw.csv', encoding = 'UTF-8')
+df_2022_23 <- read.csv('https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2022-23/gws/merged_gw.csv', encoding = 'UTF-8')
+df_2023_24 <- read.csv('https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/gws/merged_gw.csv', encoding = 'UTF-8')
+
+```
+
+```{r}
+dim(df_2020_21)
+dim(df_2021_22)
+dim(df_2022_23)
+dim(df_2023_24)
+```
+
+```{r}
+cols <- c("expected_assists", "expected_goal_involvements", "expected_goals", "expected_goals_conceded", "starts")
+
+for (col in cols) {
+  df_2020_21[[col]] <- 0
+  df_2021_22[[col]] <- 0
+}
+
+#dim(df_2020_21)
+#df_2020_21
+```
+
+```{r}
+df_2020_21$season <- "2020/21"
+df_2021_22$season <- "2021/22"
+df_2022_23$season <- "2022/23"
+df_2023_24$season <- "2023/24"
+```
+
+```{r}
+tot_df <- rbind(df_2020_21, df_2021_22, df_2022_23, df_2023_24)
+```
+
+```{r}
+tot_df
+```
+
+```{r}
+write.xlsx(tot_df, "C:/Users/ganiy/Documents/fpl-research/data/fpl_data/full_df.xlsx")
+```
+
